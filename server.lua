@@ -121,7 +121,7 @@ function processRequest(msg)
         return "OK"
     -- Returns entire index
     elseif msg.cmd == "list" then
-        return index
+        return util.collate(index)
     -- Looks up supplied name in the cache.
     elseif msg.cmd == "name" then
         msg.meta = msg.meta or 0

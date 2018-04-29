@@ -39,4 +39,20 @@ function dump(slot)
 	query { cmd = "insert", fromInv = conf.name, fromSlot = slot }
 end
 
-return { conf = conf, query = query, fetch = fetch, dump = dump }
+local function collate(items)
+    local ret = {}
+    for _, i in pairs(items) do
+        ret[i] = (ret[i] or 0) + 1
+    end
+    return ret
+end
+
+local function satisfied(needs, has)
+    local good = true
+    for k, qty in pairs(needs) do
+        if qty > (has[k] or 0) then good = false end
+    end
+    return good
+end
+
+return { conf = conf, query = query, fetch = fetch, dump = dump, collate = collate, satisfied = satisfied }
