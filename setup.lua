@@ -28,4 +28,6 @@ local f = fs.open("startup", "w")
 f.write("shell.run '" .. ty .. "'")
 f.close()
 
+os.setComputerLabel("Dragon Node")
+
 print "Done! Reboot or run startup."
