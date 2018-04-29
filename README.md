@@ -3,6 +3,8 @@ A centralized storage management system for Minecraft.
 Requires Plethora Peripherals by SquidDev and ideally CC: Tweaked.
 
 ## Setup
+`util.lua` must be downloaded for `client.lua` and `server.lua` to function.
+
 ### Networking & Hardware
 
 ```
