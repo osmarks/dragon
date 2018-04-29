@@ -18,12 +18,12 @@ Server ─── Buffer
    ┌────┴──┬───────┐
 Client  Client  Client
 ```
-**Chests** is a set of chests and/or shulker boxes, connected via networking cables and modems, to the **Server** and **Buffer**.
-**Buffer** is a set of two droppers, each with two wired connections - one on the internal side, connected to the chests, and one on the external side, connected to the clients.
-**Server** is a computer running `server.lua`. It must be connected to the chests, clients, and both sides of the buffers.
-**Client** is a crafty turtle running `client.lua`. It must be connected to the server and external side of the buffers.
-**Processing** will be used for autocrafting systems. It is not yet implemented.
-**Introspection Module** is an introspection module, bound to a user, in a manipulator. To use it, it must be connected to a client with it configured, and the external side of the buffers. It is recommended that you interact with the client connected to it via a Plethora keyboard.
+* **Chests** is a set of chests and/or shulker boxes, connected via networking cables and modems, to the **Server** and **Buffer**.
+* **Buffer** is a set of two droppers, each with two wired connections - one on the internal side, connected to the chests, and one on the external side, connected to the clients.
+* **Server** is a computer running `server.lua`. It must be connected to the chests, clients, and both sides of the buffers.
+* **Client** is a crafty turtle running `client.lua`. It must be connected to the server and external side of the buffers.
+* **Processing** will be used for autocrafting systems. It is not yet implemented.
+* **Introspection Module** is an introspection module, bound to a user, in a manipulator. To use it, it must be connected to a client with it configured, and the external side of the buffers. It is recommended that you interact with the client connected to it via a Plethora keyboard.
 
 ### Configuration
 Configuration must be saved in a file called `conf` (no `.lua` extension). It is in lua table/textutils.serialise syntax.
