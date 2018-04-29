@@ -9,8 +9,7 @@ for _, n in pairs(peripheral.getNames()) do
     local p = peripheral.wrap(n)
     if 
         string.find(n, "chest") or
-        string.find(n, "shulker") or
-        string.find(n, "cookiejar") then
+        string.find(n, "shulker") then
         inventories[n] = p
     end
 end
