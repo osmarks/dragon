@@ -1,5 +1,6 @@
 local util = require "util"
 local conf = util.conf
+local query = util.query
 
 rednet.open(conf.modem)
 
