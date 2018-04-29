@@ -28,6 +28,7 @@ Client  Client  Client
 * **Introspection Module** is an introspection module, bound to a user, in a manipulator. To use it, it must be connected to a client with it configured, and the external side of the buffers. It is recommended that you interact with the client connected to it via a Plethora keyboard.
 
 ### Configuration
+`setup.lua` handles most of the installation. It can also be run as `setup update` in order to update the code without going through the config process. Download it with `wget https://osmarks.ml/git/osmarks/dragon/raw/branch/master/setup.lua`.
 Configuration must be saved in a file called `conf` (no `.lua` extension). It is in lua table/textutils.serialise syntax.
 
 #### Server/Client
