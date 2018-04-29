@@ -16,4 +16,16 @@ end
 print "Files downloaded. Either client.lua or server.lua should be run on startup."
 print "Opening config editor..."
 shell.run "edit conf"
-fs.move("conf.lua", "conf") -- edit is really stupid, so un-.lua file
+pcall(fs.move, "conf.lua", "conf") -- edit is really stupid, so un-.lua output file
+
+local ty
+repeat
+    print "Would you like this node set up as a server or client?"
+    ty = read()
+until ty == "server" or ty == "client"
+
+local f = fs.open("startup", "w")
+f.write("shell.run '" .. ty .. "'")
+f.close()
+
+print "Done! Reboot or run startup."
