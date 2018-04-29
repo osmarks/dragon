@@ -17,33 +17,6 @@ local function split(str, sep)
 	return t
 end
 
--- Fetches an item with the given display name in the given quantity.
-local function fetchItem(item, toGet)
-	local result
-	repeat
-		local toGetNow = 64
-		if toGet < 64 then toGetNow = toGet end
-
-		result = query { cmd = "extract", dname = item, destInv = conf.name, qty = toGetNow }
-		if result and type(result) == "table" and result[1] then
-			toGet = toGet - result[1]
-		end
-
-		if conf.introspection then
-			conf.introspection.pullItems(conf.name, 1)
-		end
-	until toGet <= 0 or result == "ERROR"
-end
-
--- Dumps an inventory slot into storage
-function dump(slot)
-	if conf.introspection then
-		conf.introspection.pushItems(conf.name, slot)
-		slot = 1
-	end
-	query { cmd = "insert", fromInv = conf.name, fromSlot = slot }
-end
-
 -- Attempts to interpret the first of a list of tokens as a number.
 function tryNumber(tokens)
 	local fst = table.remove(tokens, 1)
@@ -82,7 +55,7 @@ while true do
 		end
         
 		local item = table.concat(tokens, " ")
-		fetchItem(item, qty)
+		util.fetch(item, qty)
     elseif cmd == "c" then
 		turtle.craft()
 	elseif cmd == "d" then
@@ -92,7 +65,7 @@ while true do
 			local size = 16
 			if conf.introspection then size = conf.introspection.size() end
 			for i = 1, size do
-				dump(i)
+				util.dump(i)
 			end
 		end
 	elseif cmd == "r" then
