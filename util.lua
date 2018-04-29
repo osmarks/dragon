@@ -2,6 +2,7 @@ local f = fs.open("conf", "r")
 local conf = textutils.unserialise(f.readAll())
 f.close()
 
+-- Queries Dragon servers. In a loop.
 local function query(m)
 	local msg
 	repeat

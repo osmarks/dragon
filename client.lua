@@ -16,6 +16,7 @@ local function split(str, sep)
 	return t
 end
 
+-- Fetches an item with the given display name in the given quantity.
 local function fetchItem(item, toGet)
 	local result
 	repeat
@@ -33,6 +34,7 @@ local function fetchItem(item, toGet)
 	until toGet <= 0 or result == "ERROR"
 end
 
+-- Dumps an inventory slot into storage
 function dump(slot)
 	if conf.introspection then
 		conf.introspection.pushItems(conf.name, slot)
@@ -41,6 +43,7 @@ function dump(slot)
 	query { cmd = "insert", fromInv = conf.name, fromSlot = slot }
 end
 
+-- Attempts to interpret the first of a list of tokens as a number.
 function tryNumber(tokens)
 	local fst = table.remove(tokens, 1)
 	local qty = tonumber(fst)
@@ -52,6 +55,7 @@ function tryNumber(tokens)
 	return qty
 end
 
+-- Help text
 local help = [[
 Welcome to the Dragon CLI.
 Commands:

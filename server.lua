@@ -3,6 +3,7 @@ local conf = util.conf
 
 rednet.open(conf.modem)
 
+-- Find all chests or shulker boxes
 local inventories = {}
 for _, n in pairs(peripheral.getNames()) do
     local p = peripheral.wrap(n)
@@ -15,6 +16,9 @@ end
 
 local nameCache = {}
 
+-- Gets the display name of the given item (in the given chest peripheral & slot)
+-- If its name is not cached, cache it.
+-- If it is, just return the cached name
 function cache(item, chest, slot)
     local idx = item.name .. ":" .. item.damage
     
@@ -47,6 +51,7 @@ function updateIndex()
 	print "Indexing complete."
 end
 
+-- Finds all items matching a certain predicate
 function find(predicate)
     for name, items in pairs(index) do
         for slot, item in pairs(items) do
@@ -57,6 +62,7 @@ function find(predicate)
     end
 end
 
+-- Finds space in the chest system
 function findSpace()
     for name, items in pairs(index) do
         if #items < inventories[name].size() then
@@ -68,6 +74,9 @@ end
 function processRequest(msg)
     print(textutils.serialise(msg))
 
+    -- Extract an item. If meta and name are supplied, each supplied value must match exactly.
+    -- Applies a fuzzy search to display names
+    -- Extracted items are either deposited in buffer or directly in target inventory.
     if msg.cmd == "extract" then
         local inv, slot, item = find(function(item)
             return 
@@ -84,7 +93,8 @@ function processRequest(msg)
 			moved = peripheral.call(conf.bufferOutExternal, "pushItems", msg.destInv, 1)
 		end
 
-		return {moved, item}
+        return {moved, item}
+    -- Pulls items from an external inventory into storage.
 	elseif msg.cmd == "insert" then
 		if msg.fromInv and msg.fromSlot then
 			peripheral.call(conf.bufferInExternal, "pullItems", msg.fromInv, msg.fromSlot, msg.qty or 64, 1)
@@ -97,14 +107,18 @@ function processRequest(msg)
 
 		updateIndexFor(toInv) -- I don't know a good way to figure out where exactly the items went
 
-		return "OK"
+        return "OK"
+    -- Just return the external network names of the buffers
 	elseif msg.cmd == "buffers" then
-		return { conf.bufferInExternal, conf.bufferOutExternal }
+        return { conf.bufferInExternal, conf.bufferOutExternal }
+    -- Reindexes system
 	elseif msg.cmd == "reindex" then
 		updateIndex()
-		return "OK"
+        return "OK"
+    -- Returns entire index
     elseif msg.cmd == "list" then
         return index
+    -- Looks up supplied name in the cache.
     elseif msg.cmd == "name" then
         msg.meta = msg.meta or 0
         return msg.name and msg.meta and nameCache[msg.name .. ":" .. msg.meta]
