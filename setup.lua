@@ -1,3 +1,4 @@
+local argv = {...}
 local root = "https://osmarks.ml/git/osmarks/dragon/raw/branch/master/"
 
 local function download(name, file)
@@ -14,6 +15,9 @@ for _, f in pairs(files) do
 end
 
 print "Files downloaded. Either client.lua or server.lua should be run on startup."
+
+if argv[1] == "update" then os.reboot() end
+
 print "Opening config editor..."
 shell.run "edit conf"
 pcall(fs.move, "conf.lua", "conf") -- edit is really stupid, so un-.lua output file
