@@ -71,6 +71,15 @@ function findSpace()
     end
 end
 
+function search(msg)
+    return find(function(item)
+        return 
+            (not msg.meta or item.damage == msg.meta) and
+            (not msg.name or item.name == msg.name) and
+            (not msg.dname or string.find(item.displayName:lower(), msg.dname:lower()))
+    end)
+end
+
 function processRequest(msg)
     print(textutils.serialise(msg))
 
@@ -78,12 +87,7 @@ function processRequest(msg)
     -- Applies a fuzzy search to display names
     -- Extracted items are either deposited in buffer or directly in target inventory.
     if msg.cmd == "extract" then
-        local inv, slot, item = find(function(item)
-            return 
-                (not msg.meta or item.damage == msg.meta) and
-                (not msg.name or item.name == msg.name) and
-                (not msg.dname or string.find(item.displayName:lower(), msg.dname:lower()))
-        end)
+        local inv, slot, item = search(msg)
 
 		index[inv][slot] = nil
 
