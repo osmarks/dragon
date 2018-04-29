@@ -8,7 +8,7 @@ local function download(name, file)
     f.close()
 end
 
-local files = { "client.lua", "server.lua", "util.lua" }
+local files = { "client.lua", "server.lua", "util.lua", "setup.lua" }
 for _, f in pairs(files) do
     download(f, f)
     print("Downloaded", f)
