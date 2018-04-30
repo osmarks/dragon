@@ -2,6 +2,8 @@ local _ = require "moses"
 local util = require "util"
 local conf = util.conf
 
+rednet.open(conf.modem)
+
 local patterns = loadfile "patterns.lua"()
 
 local function descend(intermediateFn, terminalFn, i)
@@ -69,4 +71,9 @@ local function craft(i)
     end
 end
 
-return { cost = cost, descend = descend, collate = collate, tasks = tasks }
+while true do
+    local id, msg = rednet.receive "dragon"
+    if msg and msg.cmd and msg.cmd == "craft" and msg.item then
+        craft(msg.item)
+    end
+end
