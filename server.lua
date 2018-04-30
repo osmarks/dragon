@@ -94,7 +94,7 @@ function processRequest(msg)
 		local moved = peripheral.call(conf.bufferOutInternal, "pullItems", inv, slot, msg.qty or 64, 1)
 
 		if msg.destInv then
-			moved = peripheral.call(conf.bufferOutExternal, "pushItems", msg.destInv, 1)
+			moved = peripheral.call(conf.bufferOutExternal, "pushItems", msg.destInv, 1, 64, msg.destSlot)
 		end
 
         return {moved, item}

@@ -1,7 +1,8 @@
---local util = require "util"
---local conf = util.conf
+local _ = require "moses"
+local util = require "util"
+local conf = util.conf
 
-local patterns = loadfile("patterns.lua")()
+local patterns = loadfile "patterns.lua"()
 
 local function descend(intermediateFn, terminalFn, i)
     local pattern = patterns[i]
@@ -28,7 +29,7 @@ end
 local function cost(i)
     local items = {}
     descend(function() end, function(i) table.insert(items, i) end, i)
-    return items
+    return collate(items)
 end
 
 local function tasks(i)
@@ -37,12 +38,32 @@ local function tasks(i)
     return t
 end
 
+-- Splits "mod:item:meta" into {"mod:item", "meta"}
+local function splitItemString(is)
+    local parts = util.split(is, ":")
+    return {parts[1] .. parts[2], tonumber(parts[3]) or 0}
+end
+
+local function craftOne(pat)
+    for slot, itemName in pairs(pat) do
+        local ispl = splitItemString(itemName)
+        util.query { cmd = "extract", meta = ispl[2], name = ispl[1], destInv = conf.name, destSlot = slot }
+    end
+    turtle.craft()
+    util.query { cmd = "insert", fromInv = conf.name, fromSlot = 16 }
+end
+
 local function craft(i)
+    turtle.select(16) -- so that crafting outputs go here
+
     local stored = utils.query { cmd = "list" }
     local reqs = cost(i)
 
     if util.satisfied(reqs, stored) then
-        -- do crafting stuff
+        local tsks = _.reverse(tasks(i)) -- tasks returns the highest level/most complex/most subtask-requring tasks first.
+        for _, tsk in pairs(tsks) do
+            craftOne(tsk)
+        end
     else
         return "ERROR"
     end
