@@ -58,7 +58,7 @@ end
 local function craft(i)
     turtle.select(16) -- so that crafting outputs go here
 
-    local stored = utils.query { cmd = "list" }
+    local stored = util.query { cmd = "list" }
     local reqs = cost(i)
 
     if util.satisfied(reqs, stored) then
