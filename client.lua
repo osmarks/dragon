@@ -72,7 +72,7 @@ while true do
 	elseif cmd == "r" then
 		query { cmd = "reindex" }
 	elseif cmd == "ac" then
-		query { cmd = "craft", item = tokens[2] }
+		query { cmd = "craft", item = tokens[1] }
 	elseif cmd == "help" then
 		textutils.pagedPrint(help)
 	end
