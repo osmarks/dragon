@@ -15,7 +15,7 @@ for _, f in pairs(files) do
 end
 
 -- Download functional Lua library
-download("https://github.com/Yonaba/Moses/blob/master/moses_min.lua", "moses.lua")
+download("https://raw.githubusercontent.com/Yonaba/Moses/master/moses_min.lua", "moses.lua")
 print "Downloaded Moses library"
 
 print "Files downloaded. Either client.lua or server.lua should be run on startup."
