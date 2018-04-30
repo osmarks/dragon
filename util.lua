@@ -59,26 +59,26 @@ end
 
 -- Python-style version from http://lua-users.org/wiki/SplitJoin
 -- Why is this not in the standard Lua library?!
-local function split(sSeparator, nMax, bRegexp)
+local function split(str, sSeparator, nMax, bRegexp)
 	assert(sSeparator ~= '')
 	assert(nMax == nil or nMax >= 1)
  
 	local aRecord = {}
  
-	if self:len() > 0 then
+	if str:len() > 0 then
 	   local bPlain = not bRegexp
 	   nMax = nMax or -1
  
 	   local nField, nStart = 1, 1
-	   local nFirst,nLast = self:find(sSeparator, nStart, bPlain)
+	   local nFirst,nLast = str:find(sSeparator, nStart, bPlain)
 	   while nFirst and nMax ~= 0 do
-		  aRecord[nField] = self:sub(nStart, nFirst-1)
+		  aRecord[nField] = str:sub(nStart, nFirst-1)
 		  nField = nField+1
 		  nStart = nLast+1
-		  nFirst,nLast = self:find(sSeparator, nStart, bPlain)
+		  nFirst,nLast = str:find(sSeparator, nStart, bPlain)
 		  nMax = nMax-1
 	   end
-	   aRecord[nField] = self:sub(nStart)
+	   aRecord[nField] = str:sub(nStart)
 	end
  
 	return aRecord
