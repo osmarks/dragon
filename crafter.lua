@@ -48,8 +48,10 @@ end
 
 local function craftOne(pat)
     for slot, itemName in pairs(pat) do
-        local ispl = splitItemString(itemName)
-        util.query { cmd = "extract", meta = ispl[2], name = ispl[1], destInv = conf.name, destSlot = slot }
+        if slot ~= "qty" then
+            local ispl = splitItemString(itemName)
+            util.query { cmd = "extract", meta = ispl[2], name = ispl[1], destInv = conf.name, destSlot = slot }
+        end
     end
     turtle.craft()
     util.query { cmd = "insert", fromInv = conf.name, fromSlot = 16 }
