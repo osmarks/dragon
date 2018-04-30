@@ -78,4 +78,5 @@ while true do
     if msg and msg.cmd and msg.cmd == "craft" and msg.item then
         craft(msg.item)
     end
+    rednet.send(id, "OK", "dragon")
 end
