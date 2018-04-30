@@ -31,7 +31,7 @@ end
 local function cost(i)
     local items = {}
     descend(function() end, function(i) table.insert(items, i) end, i)
-    return collate(items)
+    return util.collate(items)
 end
 
 local function tasks(i)
