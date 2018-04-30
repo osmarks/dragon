@@ -43,18 +43,18 @@ end
 -- Splits "mod:item:meta" into {"mod:item", "meta"}
 local function splitItemString(is)
     local parts = util.split(is, ":")
-    return {parts[1] .. parts[2], tonumber(parts[3]) or 0}
+    return {parts[1] .. ":" .. parts[2], tonumber(parts[3]) or 0}
 end
 
 local function craftOne(pat)
     for slot, itemName in pairs(pat) do
         if slot ~= "qty" then
             local ispl = splitItemString(itemName)
-            util.query { cmd = "extract", meta = ispl[2], name = ispl[1], destInv = conf.name, destSlot = slot }
+            util.query { cmd = "extract", meta = ispl[2], name = ispl[1], destInv = conf.name, destSlot = slot, qty = 1 }
         end
     end
     turtle.craft()
-    util.query { cmd = "insert", fromInv = conf.name, fromSlot = 16 }
+    util.dump(16)
 end
 
 local function craft(i)
