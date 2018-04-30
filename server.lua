@@ -89,9 +89,11 @@ function processRequest(msg)
     if msg.cmd == "extract" then
         local inv, slot, item = search(msg)
 
-		index[inv][slot] = nil
+        local qty = msg.qty or 64
 
-		local moved = peripheral.call(conf.bufferOutInternal, "pullItems", inv, slot, msg.qty or 64, 1)
+		updateIndexFor(inv)
+
+		local moved = peripheral.call(conf.bufferOutInternal, "pullItems", inv, slot, qty, 1)
 
 		if msg.destInv then
 			moved = peripheral.call(conf.bufferOutExternal, "pushItems", msg.destInv, 1, 64, msg.destSlot)
