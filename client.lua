@@ -36,6 +36,7 @@ Commands:
 w [name] - withdraw all items whose names contain [name]
 w [qty] [name] - withdraw [qty] items whose names contain [name]
 c - Craft item, using the turtle's inventory as a grid (turtle.craft)
+ac - Atempt to craft item, using Dragon autocrafting. Takes an internal name.
 d - Dump all items into storage
 d [slot] - Dump items in [slot] into storage
 r - Force connected storage server to reindex
@@ -70,6 +71,8 @@ while true do
 		end
 	elseif cmd == "r" then
 		query { cmd = "reindex" }
+	elseif cmd == "ac" then
+		query { cmd = "craft", item = tokens[2] }
 	elseif cmd == "help" then
 		textutils.pagedPrint(help)
 	end
