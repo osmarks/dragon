@@ -106,8 +106,8 @@ local function split(str, sSeparator, nMax, bRegexp)
 local function processMessage(f)
 	local id, msg = rednet.receive "dragon"
 	if msg and msg.uid then
-		local r = f(msg)
-		rednet.send(id, { uid = msg.uid, msg = r }, "dragon")
+		local send, response = f(msg)
+		if send then rednet.send(id, { uid = msg.uid, msg = response }, "dragon") end
 	end
 end
 

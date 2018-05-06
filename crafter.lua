@@ -77,7 +77,8 @@ end
 while true do
     util.processMessage(function(m) 
         if m.cmd and m.item and m.cmd == "craft" then
-            return craft(m.item)
+            return true, craft(m.item)
         end
+        return false
     end)
 end

@@ -137,7 +137,7 @@ function processRequests()
             local ok, r = pcall(processRequest, msg)
             if not ok then r = "ERROR" end
 
-            return r
+            return true, r
         end)
     end
 end
