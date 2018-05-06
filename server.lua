@@ -134,10 +134,11 @@ end
 function processRequests()
     while true do
         local id, msg = rednet.receive "dragon"
-        if msg and msg.cmd then
+        if msg and msg.cmd and msg.uid then
             local ok, r = pcall(processRequest, msg)
 
-			if not ok then r = "ERROR" end
+            if not ok then r = "ERROR" end
+            r.uid = msg.uid
 			
             rednet.send(id, r, "dragon")
         end

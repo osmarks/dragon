@@ -2,13 +2,32 @@ local f = fs.open("conf", "r")
 local conf = textutils.unserialise(f.readAll())
 f.close()
 
+local errors = {
+	matches = function(error, etyp)
+		return error and error[1] == etyp
+	end,
+	error = function(etyp, ...)
+		local ret = {etyp}
+		for _, arg in pairs({...}) do
+			table.insert(ret, arg)
+		end
+		return ret
+	end,
+	missingItems = "EITEMS",
+	noSpace = "ESPACE",
+	noPattern = "EPATTERN",
+	
+}
+
 -- Queries Dragon servers. In a loop.
 local function query(m)
+	local uid = math.random(0, 1000000000)
+	m.uid = uid
 	local msg
 	repeat
     	rednet.broadcast(m, "dragon")
     	_, msg = rednet.receive("dragon", 1)
-	until msg
+	until msg and msg.uid == uid
 	return msg
 end
 
