@@ -26,7 +26,7 @@ local function query(m)
 	local resp
 	repeat
     	rednet.broadcast(m, "dragon")
-    	_, msg = rednet.receive("dragon", 1)
+    	_, resp = rednet.receive("dragon", 1)
 	until resp and resp.msg and resp.uid == uid
 	return resp.msg
 end
