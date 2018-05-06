@@ -68,15 +68,16 @@ local function craft(i)
         for _, tsk in pairs(tsks) do
             craftOne(tsk)
         end
+        return "OK"
     else
         return "ERROR"
     end
 end
 
 while true do
-    local id, msg = rednet.receive "dragon"
-    if msg and msg.cmd and msg.cmd == "craft" and msg.item then
-        craft(msg.item)
-        rednet.send(id, "OK", "dragon")
-    end
+    util.processMessage(function(m) 
+        if m.cmd and m.item and m.cmd == "craft" then
+            return craft(m.item)
+        end
+    end)
 end

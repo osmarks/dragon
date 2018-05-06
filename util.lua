@@ -103,4 +103,12 @@ local function split(str, sSeparator, nMax, bRegexp)
 	return aRecord
  end
 
-return { conf = conf, query = query, fetch = fetch, dump = dump, collate = collate, satisfied = satisfied, split = split }
+local function processMessage(f)
+	local id, msg = rednet.receive "dragon"
+	if msg and msg.uid then
+		local r = f(msg)
+		rednet.send(id, { uid = msg.uid, msg = r }, "dragon")
+	end
+end
+
+return { conf = conf, query = query, fetch = fetch, dump = dump, collate = collate, satisfied = satisfied, split = split, process = process }

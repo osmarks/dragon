@@ -133,15 +133,12 @@ end
 
 function processRequests()
     while true do
-        local id, msg = rednet.receive "dragon"
-        if msg and msg.cmd and msg.uid then
+        util.processMessage(function(msg)
             local ok, r = pcall(processRequest, msg)
-
             if not ok then r = "ERROR" end
-			
-            rednet.send(id, { msg = r, uid = msg.uid }, "dragon")
-        end
-    end
+
+            return r
+    end)
 end
 
 updateIndex()

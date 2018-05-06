@@ -36,7 +36,7 @@ Commands:
 w [name] - withdraw all items whose names contain [name]
 w [qty] [name] - withdraw [qty] items whose names contain [name]
 c - Craft item, using the turtle's inventory as a grid (turtle.craft)
-ac - Atempt to craft item, using Dragon autocrafting. Takes an internal name.
+ac [item] - Atempt to craft item, using Dragon autocrafting. Takes an internal name.
 d - Dump all items into storage
 d [slot] - Dump items in [slot] into storage
 r - Force connected storage server to reindex
