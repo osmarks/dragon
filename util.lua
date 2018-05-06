@@ -23,12 +23,12 @@ local errors = {
 local function query(m)
 	local uid = math.random(0, 1000000000)
 	m.uid = uid
-	local msg
+	local resp
 	repeat
     	rednet.broadcast(m, "dragon")
     	_, msg = rednet.receive("dragon", 1)
-	until msg and msg.uid == uid
-	return msg
+	until resp and resp.msg and resp.uid == uid
+	return resp.msg
 end
 
 -- Fetches an item with the given display name in the given quantity.
