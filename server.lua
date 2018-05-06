@@ -138,7 +138,7 @@ function processRequests()
             local ok, r = pcall(processRequest, msg)
 
             if not ok then r = "ERROR" end
-            r.uid = msg.uid
+            if r then r.uid = msg.uid end
 			
             rednet.send(id, r, "dragon")
         end
