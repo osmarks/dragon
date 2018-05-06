@@ -77,6 +77,6 @@ while true do
     local id, msg = rednet.receive "dragon"
     if msg and msg.cmd and msg.cmd == "craft" and msg.item then
         craft(msg.item)
+        rednet.send(id, "OK", "dragon")
     end
-    rednet.send(id, "OK", "dragon")
 end
