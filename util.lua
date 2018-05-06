@@ -111,4 +111,4 @@ local function processMessage(f)
 	end
 end
 
-return { conf = conf, query = query, fetch = fetch, dump = dump, collate = collate, satisfied = satisfied, split = split, process = process }
+return { conf = conf, query = query, fetch = fetch, dump = dump, collate = collate, satisfied = satisfied, split = split, processMessage = processMessage }
