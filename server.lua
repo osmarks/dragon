@@ -138,7 +138,8 @@ function processRequests()
             if not ok then r = "ERROR" end
 
             return r
-    end)
+        end)
+    end
 end
 
 updateIndex()
